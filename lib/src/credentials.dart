@@ -72,6 +72,12 @@ class Credentials {
   /// expiration date.
   final DateTime? expiration;
 
+  /// id of Users Orga (salesforce only).
+  final String? orgaId;
+
+  /// id of User (salesforce only).
+  final String? userId;
+
   /// The function used to parse parameters from a host's response.
   final GetParameters _getParameters;
 
@@ -114,6 +120,8 @@ class Credentials {
       this.tokenEndpoint,
       Iterable<String>? scopes,
       this.expiration,
+      this.orgaId,
+      this.userId,
       String? delimiter,
       Map<String, dynamic> Function(MediaType? mediaType, String body)?
           getParameters})
@@ -183,6 +191,8 @@ class Credentials {
       tokenEndpoint: tokenEndpointUri,
       scopes: (scopes as List).map((scope) => scope as String),
       expiration: expirationDateTime,
+      orgaId: parsed['orgaId'] as String?,
+      userId: parsed['userId'] as String?
     );
   }
 
@@ -196,7 +206,9 @@ class Credentials {
         'idToken': idToken,
         'tokenEndpoint': tokenEndpoint?.toString(),
         'scopes': scopes,
-        'expiration': expiration?.millisecondsSinceEpoch
+        'expiration': expiration?.millisecondsSinceEpoch,
+        'orgaId' : orgaId,
+        'userId' : userId,
       });
 
   /// Returns a new set of refreshed credentials.
@@ -262,6 +274,8 @@ class Credentials {
         idToken: credentials.idToken,
         tokenEndpoint: credentials.tokenEndpoint,
         scopes: credentials.scopes,
-        expiration: credentials.expiration);
+        expiration: credentials.expiration, 
+        orgaId: credentials.orgaId,
+        userId: credentials.userId);
   }
 }
