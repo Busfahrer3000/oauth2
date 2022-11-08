@@ -16,6 +16,7 @@ import 'credentials.dart';
 import 'handle_access_token_response.dart';
 import 'parameters.dart';
 import 'utils.dart';
+import 'dart:developer' as debugger;
 
 /// A class for obtaining credentials via an [authorization code grant][].
 ///
@@ -313,7 +314,6 @@ class AuthorizationCodeGrant {
 
     var response =
         await _httpClient!.post(tokenEndpoint, headers: headers, body: body);
-
     var credentials = handleAccessTokenResponse(
         response, tokenEndpoint, startTime, _scopes, _delimiter,
         getParameters: _getParameters);
