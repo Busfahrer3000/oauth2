@@ -97,6 +97,8 @@ Credentials handleAccessTokenResponse(http.Response response, Uri tokenEndpoint,
         ? null
         : startTime.add(Duration(seconds: expiresIn as int) - _expirationGrace);
 
+    var urlSplit = parameters['id'].toString().split("/");
+
     return Credentials(
       parameters['access_token'] as String,
       refreshToken: parameters['refresh_token'] as String?,
@@ -104,6 +106,8 @@ Credentials handleAccessTokenResponse(http.Response response, Uri tokenEndpoint,
       tokenEndpoint: tokenEndpoint,
       scopes: scopes,
       expiration: expiration,
+      orgaId: urlSplit[4] as String?,
+      userId: urlSplit[5] as String?,
     );
   } on FormatException catch (e) {
     throw FormatException('Invalid OAuth response for "$tokenEndpoint": '
